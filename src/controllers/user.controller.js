@@ -306,15 +306,26 @@ exports.getUserPosts = async (req, res, next) => {
 
         // Fetch the user's posts
         const response = await axios.get(
-            `https://graph.facebook.com/v20.0/me/posts?access_token=${user.accessToken}&
-            fields=id,message,created_time,updated_time,link,type,from,comments{message,from,created_time},privacy,attachments`
+            `https://graph.facebook.com/v20.0/me/posts`, {
+            params: {
+                access_token: user.accessToken,
+                fields: 'id,message,created_time,updated_time,link,type,from,comments{message,from,created_time},privacy,attachments',
+            }
+        }
         );
 
         const posts = response.data.data;
         const paging = response.data.paging;
 
-        const result = await axios.get(`https://graph.facebook.com/v17.0/2996079313867342_2087375438071072/comments?access_token=${user.accessToken}`);
-        const comments = result.data;
+        const commentsResponse = await axios.get(
+            `https://graph.facebook.com/v17.0/2996079313867342_2087375438071072/comments`, {
+            params: {
+                access_token: user.accessToken
+            }
+        }
+        );
+
+        const comments = commentsResponse.data;
 
         successResponse(res, {
             status: 200,

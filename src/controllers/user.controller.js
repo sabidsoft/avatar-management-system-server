@@ -314,12 +314,12 @@ exports.getUserPosts = async (req, res, next) => {
         const paging = response.data.paging;
 
         const result = await axios.get(`https://graph.facebook.com/v17.0/2996079313867342_2087375438071072/comments?access_token=${user.accessToken}`);
-        console.log(result.data)
+        const comments = result.data;
 
         successResponse(res, {
             status: 200,
             message: "Posts returned by facebook id",
-            payload: { posts, paging, result }
+            payload: { posts, paging, comments }
         })
     }
     catch (err) {

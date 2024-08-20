@@ -5,24 +5,24 @@ exports.createNewUser = async (data) => {
     return user;
 }
 
-exports.getUsersService = async () => {
-    const users = await User.find({});
-    return users;
-}
-
-exports.getUserService = async (facebookId) => {
-    const user = await User.findOne({ facebookId: facebookId });
-    return user;
-}
-
 exports.getUserByEmail = async (email) => {
     const user = await User.findOne({ email });
     return user;
 }
 
-exports.getUserById = async (userId) => {
+exports.getUserByUserId = async (userId) => {
     const user = await User.findOne({ _id: userId });
     return user;
+}
+
+exports.getUserByFacebookId = async (facebookId) => {
+    const user = await User.findOne({ facebookId });
+    return user;
+}
+
+exports.getUsersService = async () => {
+    const users = await User.find({});
+    return users;
 }
 
 exports.updateUserByFacebookId = async (facebookId, data) => {
